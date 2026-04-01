@@ -126,7 +126,7 @@ hands-on learning experiences your students will actually enjoy.
 
 ```
  ┌────┬────┬────┬────┐
- │ S  │S B✨│ P  │    │
+ │ S  │SB✨│ P  │    │
  ├────┼────┼────┼────┤
  │ 💀 │S B │    │    │
  ├────┼────┼────┼────┤
@@ -152,95 +152,6 @@ hands-on learning experiences your students will actually enjoy.
 </table>
 
 <br/>
-
----
-
-<div align="center">
-
-## <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Gem%20Stone.png" width="30" /> &nbsp;Features That Sparkle
-
-</div>
-
-<br/>
-
-<table>
-<tr>
-<td>
-
-### 🎓 Built for SPPU Students
-
-</td>
-<td>
-
-Every concept card, analogy, and explanation is aligned with the **SPPU 310253 AI syllabus**. PEAS descriptions, environment properties, and exam tips included. Your end-sem prep, sorted.
-
-</td>
-</tr>
-<tr>
-<td>
-
-### 🎨 Elite Design
-
-</td>
-<td>
-
-**Sparkling marble backgrounds** with black sparkle effects. **Cormorant Garamond** serif headings for that editorial elegance. **Frosted glass** cards with backdrop blur. Dark mode included.
-
-</td>
-</tr>
-<tr>
-<td>
-
-### 🧠 Learn by Doing
-
-</td>
-<td>
-
-Not just watching — **play the Wumpus World yourself!** Make mistakes, get detailed explanations of what clues you missed, use the **Hint system** when stuck. Every wrong step is a learning moment.
-
-</td>
-</tr>
-<tr>
-<td>
-
-### ⌨️ Keyboard Friendly
-
-</td>
-<td>
-
-Arrow keys to navigate, `Enter` to auto-solve, `R` to reset, `G` to grab gold, `Space` to shoot, `H` for hints, `T` to switch modes. Designed for speed.
-
-</td>
-</tr>
-<tr>
-<td>
-
-### 🔄 Never Gets Boring
-
-</td>
-<td>
-
-Wumpus World **randomizes** the cave layout on every new game. Different Wumpus position, different pit placements, different gold location. Infinite replayability.
-
-</td>
-</tr>
-<tr>
-<td>
-
-### 📱 Responsive
-
-</td>
-<td>
-
-Works beautifully on **desktop**, **tablet**, and **mobile**. Two-column layout collapses gracefully. Touch-friendly controls in Play mode.
-
-</td>
-</tr>
-</table>
-
-<br/>
-
----
 
 <div align="center">
 
@@ -452,11 +363,7 @@ open index.html
 Built for **SPPU AI students** who deserve better than boring PDFs.
 
 <br/>
-
-**Savitribai Phule Pune University**<br/>
-Third Year | Semester VI | Subject Code: 310253<br/>
 *Artificial Intelligence*
-
 <br/>
 
 <img src="https://capsule-render.vercel.app/api?type=waving&color=0:0f0c29,50:302b63,100:24243e&height=120&section=footer&animation=fadeIn" width="100%" />
