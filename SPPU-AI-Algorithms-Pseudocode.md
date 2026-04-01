@@ -1,4 +1,4 @@
-# SPPU AI Algorithms — Simple Pseudocode & Explanations
+# Pseudocode & Explanation for Prim's MST, A* Algorithm — 8 Puzzle and Wumpus World
 
 > **Subject:** 310253 — Artificial Intelligence | Third Year | Semester VI
 >
@@ -17,6 +17,10 @@ Finds the **cheapest way to connect all nodes** in a graph. Like building roads 
 3. Pick the **cheapest** edge.
 4. Add that edge and the new node to your connected group.
 5. Repeat steps 2-4 until every node is connected.
+
+
+
+<img src="/Users/rajesh/ThirdAI/Simulations/image-20260401165637295.png" alt="image-20260401165637295 " style="zoom:50%;" />
 
 ### Pseudocode
 
@@ -73,12 +77,22 @@ f(n) = total estimated cost (odometer + GPS)
 
 ### Plain English Steps
 1. Put the start state in the OPEN list (to-do list).
+
 2. Pick the state with the **smallest f(n)** from OPEN.
+
 3. If it's the goal → DONE! Trace back the path.
+
 4. Otherwise, generate all neighbor states (slide tiles into the blank).
+
 5. For each neighbor: calculate g, h, f. Add to OPEN if not already explored.
+
 6. Move current state to CLOSED list (done list).
+
 7. Go back to step 2.
+
+   
+
+<img src="/Users/rajesh/ThirdAI/Simulations/image-20260401165727897.png" alt="image-20260401165727897 " style="zoom:50%;" />
 
 ### Pseudocode
 
@@ -174,6 +188,10 @@ AGENT HAS:
 5. Move to a safe room. Repeat.
 6. If you find glitter → GRAB gold → retrace path → CLIMB OUT at (1,1).
 
+
+
+<img src="/Users/rajesh/ThirdAI/Simulations/image-20260401165828756.png" alt="image-20260401165828756 " style="zoom:50%;" />
+
 ### Pseudocode
 
 ```
@@ -255,7 +273,3 @@ CONCLUSION: Wumpus MUST be at (1,3)!
 
 ---
 
-## Visual Diagrams
-
-See the accompanying `.excalidraw` file for visual flowcharts of each algorithm:
-- `SPPU-AI-Algorithm-Diagrams.excalidraw`
