@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<!--
+   ______                            __
+  / ____/___  ____ ___  ____  __  __/ /____  _____
+ / /   / __ \/ __ `__ \/ __ \/ / / / __/ _ \/ ___/
+/ /___/ /_/ / / / / / / /_/ / /_/ / /_/  __/ /
+\____/\____/_/ /_/ /_/ .___/\__,_/\__/\___/_/
+                    /_/
+        Created with Perplexity Computer
+        https://www.perplexity.ai/computer
+-->
+<meta name="generator" content="Perplexity Computer">
+<meta name="author" content="Perplexity Computer">
+<meta property="og:see_also" content="https://www.perplexity.ai/computer">
+<link rel="author" href="https://www.perplexity.ai/computer">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A* Algorithm — 8 Puzzle Simulator | SPPU AI Lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <header class="header">
+    <div class="header-inner">
+      <div class="logo-area">
+        <svg class="logo-icon" width="32" height="32" viewBox="0 0 32 32" fill="none" aria-label="A* Puzzle Logo">
+          <rect x="2" y="2" width="28" height="28" rx="4" stroke="currentColor" stroke-width="2"/>
+          <line x1="12" y1="2" x2="12" y2="30" stroke="currentColor" stroke-width="1.5" opacity="0.4"/>
+          <line x1="22" y1="2" x2="22" y2="30" stroke="currentColor" stroke-width="1.5" opacity="0.4"/>
+          <line x1="2" y1="12" x2="30" y2="12" stroke="currentColor" stroke-width="1.5" opacity="0.4"/>
+          <line x1="2" y1="22" x2="30" y2="22" stroke="currentColor" stroke-width="1.5" opacity="0.4"/>
+          <text x="16" y="18" text-anchor="middle" font-size="11" font-weight="700" fill="currentColor">A*</text>
+        </svg>
+        <div>
+          <h1 class="site-title">A* Algorithm — 8 Puzzle Problem</h1>
+          <p class="site-subtitle">SPPU | Third Year | Sem VI | 310253 — Artificial Intelligence</p>
+        </div>
+      </div>
+      <button data-theme-toggle aria-label="Switch to dark mode">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- ===== Learn the Basics Section ===== -->
+  <section class="concepts-section" id="conceptsSection">
+    <button class="concepts-toggle" id="conceptsToggle" aria-expanded="true">
+      <span class="concepts-toggle-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+      </span>
+      <span class="concepts-toggle-text">Learn the Basics First</span>
+      <span class="concepts-toggle-hint">(click to expand)</span>
+      <svg class="concepts-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+    </button>
+
+    <div class="concepts-body" id="conceptsBody">
+      <p class="concepts-intro">Master these core concepts before running the simulation. Each card builds on the previous one.</p>
+
+      <!-- Card 1: What is the 8-Puzzle? -->
+      <div class="concept-card" data-card="1">
+        <button class="concept-header" aria-expanded="true">
+          <span class="concept-num">1</span>
+          <span class="concept-title">What is the 8-Puzzle?</span>
+          <svg class="concept-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="concept-content">
+          <p>A <strong>3×3 sliding puzzle</strong> with 8 numbered tiles and one empty space. You slide tiles into the empty space to rearrange them into a target configuration.</p>
+          <div class="concept-grids-row">
+            <div class="concept-grid-block">
+              <span class="concept-grid-label">Initial State</span>
+              <div class="concept-mini-grid">
+                <div class="cm-tile">2</div><div class="cm-tile">8</div><div class="cm-tile">3</div>
+                <div class="cm-tile">1</div><div class="cm-tile">6</div><div class="cm-tile">4</div>
+                <div class="cm-tile">7</div><div class="cm-tile cm-empty"></div><div class="cm-tile">5</div>
+              </div>
+            </div>
+            <div class="concept-arrow">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </div>
+            <div class="concept-grid-block">
+              <span class="concept-grid-label">Goal State</span>
+              <div class="concept-mini-grid">
+                <div class="cm-tile">1</div><div class="cm-tile">2</div><div class="cm-tile">3</div>
+                <div class="cm-tile">8</div><div class="cm-tile cm-empty"></div><div class="cm-tile">4</div>
+                <div class="cm-tile">7</div><div class="cm-tile">6</div><div class="cm-tile">5</div>
+              </div>
+            </div>
+          </div>
+          <p class="concept-callout"><strong>Our problem:</strong> rearrange from the jumbled start to the target in the fewest moves.</p>
+        </div>
+      </div>
+
+      <!-- Card 2: What is a Heuristic? -->
+      <div class="concept-card" data-card="2">
+        <button class="concept-header" aria-expanded="true">
+          <span class="concept-num">2</span>
+          <span class="concept-title">What is a Heuristic?</span>
+          <svg class="concept-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="concept-content">
+          <p>A <strong>quick, educated guess</strong> about how close you are to your goal.</p>
+          <div class="concept-analogy">
+            <span class="analogy-label">Everyday Analogy</span>
+            <p>You're in <strong>Pune</strong>, driving to <strong>Mumbai</strong>. Straight-line distance is <strong>150 km</strong>. The actual road distance is 160–170 km. That 150 km estimate is your <em>heuristic</em> — it's always optimistic, never overestimates the real distance.</p>
+          </div>
+          <p><strong>Key property — Admissibility:</strong> A good heuristic <em>never overestimates</em> the true cost. This guarantees A* will find the optimal (shortest) solution.</p>
+        </div>
+      </div>
+
+      <!-- Card 3: Understanding g(n), h(n), and f(n) -->
+      <div class="concept-card" data-card="3">
+        <button class="concept-header" aria-expanded="true">
+          <span class="concept-num">3</span>
+          <span class="concept-title">Understanding g(n), h(n), and f(n)</span>
+          <svg class="concept-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="concept-content">
+          <div class="formula-showcase">
+            <span class="formula-showcase-f">f(n)</span>
+            <span class="formula-showcase-eq">=</span>
+            <span class="formula-showcase-g">g(n)</span>
+            <span class="formula-showcase-plus">+</span>
+            <span class="formula-showcase-h">h(n)</span>
+          </div>
+          <div class="ghf-breakdown">
+            <div class="ghf-item ghf-g">
+              <span class="ghf-symbol">g(n)</span>
+              <span class="ghf-label">Moves made so far</span>
+              <span class="ghf-analogy">Like your odometer — counts distance already travelled</span>
+            </div>
+            <div class="ghf-item ghf-h">
+              <span class="ghf-symbol">h(n)</span>
+              <span class="ghf-label">Estimated moves remaining</span>
+              <span class="ghf-analogy">Like GPS — "roughly this much left"</span>
+            </div>
+            <div class="ghf-item ghf-f">
+              <span class="ghf-symbol">f(n)</span>
+              <span class="ghf-label">Total estimated cost</span>
+              <span class="ghf-analogy">Full trip estimate = distance done + distance left</span>
+            </div>
+          </div>
+          <div class="concept-example">
+            <span class="example-label">Mini Example — Our Initial State</span>
+            <p><span class="highlight-g">g(n) = 0</span> (no moves yet), <span class="highlight-h">h(n) = 4</span> (tiles 2, 8, 1, 6 are misplaced), so <span class="highlight-f">f(n) = 0 + 4 = 4</span></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 4: The Misplaced Tiles Heuristic -->
+      <div class="concept-card" data-card="4">
+        <button class="concept-header" aria-expanded="true">
+          <span class="concept-num">4</span>
+          <span class="concept-title">The Misplaced Tiles Heuristic</span>
+          <svg class="concept-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="concept-content">
+          <p>Count how many tiles are <strong>NOT</strong> in their goal position (skip the blank).</p>
+          <div class="comparison-table-wrapper">
+            <table class="comparison-table">
+              <thead>
+                <tr>
+                  <th>Position</th>
+                  <th>Initial</th>
+                  <th>Goal</th>
+                  <th>Match?</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>[0,0]</td><td>2</td><td>1</td><td class="mismatch">✗ Misplaced</td></tr>
+                <tr><td>[0,1]</td><td>8</td><td>2</td><td class="mismatch">✗ Misplaced</td></tr>
+                <tr><td>[0,2]</td><td>3</td><td>3</td><td class="match">✓ Correct</td></tr>
+                <tr><td>[1,0]</td><td>1</td><td>8</td><td class="mismatch">✗ Misplaced</td></tr>
+                <tr><td>[1,1]</td><td>6</td><td>_</td><td class="mismatch">✗ Misplaced</td></tr>
+                <tr><td>[1,2]</td><td>4</td><td>4</td><td class="match">✓ Correct</td></tr>
+                <tr><td>[2,0]</td><td>7</td><td>7</td><td class="match">✓ Correct</td></tr>
+                <tr><td>[2,1]</td><td>_</td><td>6</td><td class="skip">— Blank (skip)</td></tr>
+                <tr><td>[2,2]</td><td>5</td><td>5</td><td class="match">✓ Correct</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="concept-callout"><strong>Misplaced: tiles 2, 8, 1, 6 → h(n) = 4</strong></p>
+          <p><strong>Why it's admissible:</strong> Each misplaced tile needs <em>at least one move</em> to fix, so this count never overestimates the actual number of moves needed.</p>
+        </div>
+      </div>
+
+      <!-- Card 5: What is A*? -->
+      <div class="concept-card" data-card="5">
+        <button class="concept-header" aria-expanded="true">
+          <span class="concept-num">5</span>
+          <span class="concept-title">What is A*?</span>
+          <svg class="concept-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="concept-content">
+          <p>A search algorithm that finds the <strong>optimal (shortest) path</strong> from start to goal.</p>
+          <ol class="astar-steps">
+            <li><strong>Start:</strong> Put the initial state in the OPEN list</li>
+            <li><strong>Pick:</strong> Select the state with the smallest f(n) from OPEN</li>
+            <li><strong>Check:</strong> Is it the goal? If yes, we're done!</li>
+            <li><strong>Expand:</strong> Generate all neighbor states (slide tiles into the blank). Add new ones to OPEN. Move the current state to CLOSED.</li>
+            <li><strong>Repeat:</strong> Go back to step 2</li>
+          </ol>
+          <p class="concept-callout">A* is smart because it uses <span class="highlight-f">f(n)</span> to prioritize the most promising states — balancing "moves already made" with "estimated moves remaining."</p>
+        </div>
+      </div>
+
+      <!-- Card 6: OPEN and CLOSED Lists -->
+      <div class="concept-card" data-card="6">
+        <button class="concept-header" aria-expanded="true">
+          <span class="concept-num">6</span>
+          <span class="concept-title">OPEN and CLOSED Lists</span>
+          <svg class="concept-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="concept-content">
+          <div class="lists-comparison">
+            <div class="list-explain open-explain">
+              <span class="list-badge open-badge">OPEN</span>
+              <strong>"To-Do List"</strong>
+              <p>States waiting to be explored. We always pick the one with the <em>lowest f(n)</em> next.</p>
+            </div>
+            <div class="list-explain closed-explain">
+              <span class="list-badge closed-badge">CLOSED</span>
+              <strong>"Done List"</strong>
+              <p>States already explored. Once a state is in CLOSED, we never revisit it.</p>
+            </div>
+          </div>
+          <div class="concept-analogy">
+            <span class="analogy-label">Restaurant Analogy</span>
+            <p>OPEN is the <strong>waitlist</strong> — the host seats the highest-priority customer (lowest f(n)) first. Once served, they go to the <strong>served list</strong> (CLOSED). You never re-serve someone already done.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Start Simulation Button -->
+      <div class="concepts-cta">
+        <button class="btn btn-start-sim" id="btnStartSim">
+          Start Simulation
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          <kbd>S</kbd>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <main class="main" id="simulationSection">
+    <!-- Left Column: Puzzle Grids -->
+    <section class="puzzle-section">
+      <div class="grids-row">
+        <div class="grid-container">
+          <h2 class="grid-label">Current State</h2>
+          <div class="puzzle-grid" id="currentGrid"></div>
+          <div class="cost-display" id="currentCost"></div>
+        </div>
+        <div class="arrow-between">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </div>
+        <div class="grid-container">
+          <h2 class="grid-label">Goal State</h2>
+          <div class="puzzle-grid" id="goalGrid"></div>
+          <div class="cost-display goal-cost">Target: h(n) = 0</div>
+        </div>
+      </div>
+
+      <!-- Controls -->
+      <div class="controls">
+        <button class="btn btn-primary" id="btnNextStep">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          Next Step
+          <kbd>→</kbd>
+        </button>
+        <button class="btn btn-accent" id="btnSolve">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5,3 19,12 5,21"/></svg>
+          Solve Completely
+          <kbd>Enter</kbd>
+        </button>
+        <button class="btn btn-secondary" id="btnReset">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1,4 1,10 7,10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+          Reset
+          <kbd>R</kbd>
+        </button>
+      </div>
+
+      <!-- Step Counter -->
+      <div class="step-counter" id="stepCounter">
+        Step <span id="stepNum">0</span> of <span id="totalSteps">?</span>
+        <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+      </div>
+
+      <!-- Explanation Panel -->
+      <div class="explanation-panel" id="explanationPanel">
+        <div class="explanation-header">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+          <span>What's happening?</span>
+        </div>
+        <div class="explanation-text" id="explanationText">
+          Press <strong>Next Step (→)</strong> to begin the A* algorithm, or <strong>Solve Completely (Enter)</strong> to see the full solution animated.
+        </div>
+      </div>
+    </section>
+
+    <!-- Right Column: Algorithm State -->
+    <aside class="state-panel">
+      <!-- Formula Card -->
+      <div class="info-card formula-card">
+        <h3>A* Evaluation Function</h3>
+        <div class="formula">f(n) = g(n) + h(n)</div>
+        <div class="formula-legend">
+          <div><span class="legend-dot g-dot"></span> <strong>g(n)</strong> = moves from start to current state</div>
+          <div><span class="legend-dot h-dot"></span> <strong>h(n)</strong> = misplaced tiles (heuristic estimate to goal)</div>
+          <div><span class="legend-dot f-dot"></span> <strong>f(n)</strong> = total estimated cost</div>
+        </div>
+      </div>
+
+      <!-- OPEN List -->
+      <div class="info-card">
+        <h3>
+          <span class="list-badge open-badge">OPEN</span> List
+          <span class="list-count" id="openCount">0</span>
+        </h3>
+        <p class="list-desc">States evaluated but not yet expanded. We pick the one with the smallest f(n).</p>
+        <div class="list-content" id="openList">
+          <div class="list-empty">Will be populated when algorithm starts</div>
+        </div>
+      </div>
+
+      <!-- CLOSED List -->
+      <div class="info-card">
+        <h3>
+          <span class="list-badge closed-badge">CLOSED</span> List
+          <span class="list-count" id="closedCount">0</span>
+        </h3>
+        <p class="list-desc">States already visited and expanded. We don't revisit these.</p>
+        <div class="list-content" id="closedList">
+          <div class="list-empty">Will be populated as states are visited</div>
+        </div>
+      </div>
+
+      <!-- Move History -->
+      <div class="info-card">
+        <h3>Solution Path</h3>
+        <div class="move-history" id="moveHistory">
+          <div class="list-empty">Solution path will appear here</div>
+        </div>
+      </div>
+    </aside>
+  </main>
+
+  <footer class="footer">
+    <p>SPPU — Third Year — Semester VI — Subject Code: 310253 — Artificial Intelligence</p>
+    <a href="https://www.perplexity.ai/computer" target="_blank" rel="noopener noreferrer">Created with Perplexity Computer</a>
+  </footer>
+
+  <script src="./app.js"></script>
+</body>
+</html>

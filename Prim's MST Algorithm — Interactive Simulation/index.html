@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<!--
+   ______                            __
+  / ____/___  ____ ___  ____  __  __/ /____  _____
+ / /   / __ \/ __ `__ \/ __ \/ / / / __/ _ \/ ___/
+/ /___/ /_/ / / / / / / /_/ / /_/ / /_/  __/ /
+\____/\____/_/ /_/ /_/ .___/\__,_/\__/\___/_/
+                    /_/
+        Created with Perplexity Computer
+        https://www.perplexity.ai/computer
+-->
+<meta name="generator" content="Perplexity Computer">
+<meta name="author" content="Perplexity Computer">
+<meta property="og:see_also" content="https://www.perplexity.ai/computer">
+<link rel="author" href="https://www.perplexity.ai/computer">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prim's MST Algorithm — Interactive Simulation | SPPU AI Lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <header class="header">
+    <div class="header-inner">
+      <div class="logo-area">
+        <svg class="logo-icon" width="32" height="32" viewBox="0 0 32 32" fill="none" aria-label="Prim's MST Logo">
+          <!-- Tree/graph icon -->
+          <circle cx="16" cy="6" r="4" stroke="currentColor" stroke-width="2"/>
+          <circle cx="6" cy="22" r="4" stroke="currentColor" stroke-width="2"/>
+          <circle cx="26" cy="22" r="4" stroke="currentColor" stroke-width="2"/>
+          <line x1="14" y1="9.5" x2="8" y2="18.5" stroke="currentColor" stroke-width="2"/>
+          <line x1="18" y1="9.5" x2="24" y2="18.5" stroke="currentColor" stroke-width="2"/>
+        </svg>
+        <div>
+          <h1 class="site-title">Prim's MST Algorithm — Interactive Simulation</h1>
+          <p class="site-subtitle">SPPU | Third Year | Sem VI | 310253 — Artificial Intelligence</p>
+        </div>
+      </div>
+      <button data-theme-toggle aria-label="Switch to dark mode">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- ===== Learn the Basics Section ===== -->
+  <section class="concepts-section" id="conceptsSection">
+    <button class="concepts-toggle" id="conceptsToggle" aria-expanded="true">
+      <span class="concepts-toggle-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+      </span>
+      <span class="concepts-toggle-text">Learn the Basics First</span>
+      <span class="concepts-toggle-hint">(click to expand)</span>
+      <svg class="concepts-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+    </button>
+
+    <div class="concepts-body" id="conceptsBody">
+      <p class="concepts-intro">Master these core concepts before running the simulation. Each card builds on the previous one.</p>
+
+      <!-- Card 1: What is a Greedy Algorithm? -->
+      <div class="concept-card" data-card="1">
+        <button class="concept-header" aria-expanded="true">
+          <span class="concept-num">1</span>
+          <span class="concept-title">What is a Greedy Algorithm?</span>
+          <svg class="concept-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="concept-content">
+          <p>A <strong>greedy algorithm</strong> builds a solution step-by-step, always picking the <strong>locally optimal (best-looking) choice</strong> at each step. It never goes back to reconsider past decisions.</p>
+          <div class="concept-analogy">
+            <span class="analogy-label">Everyday Analogy</span>
+            <p>You're <strong>shopping on a budget</strong>. You walk through the store and always grab the <strong>cheapest item</strong> that meets your need first. You don't look at the entire store before deciding — you just pick what looks best right now.</p>
+          </div>
+          <p class="concept-callout"><strong>Key idea:</strong> "Make the best choice right now, and hope it leads to the best overall solution." For many problems (like MST), this greedy approach is <em>provably optimal</em>.</p>
+        </div>
+      </div>
+
+      <!-- Card 2: What is a Spanning Tree? -->
+      <div class="concept-card" data-card="2">
+        <button class="concept-header" aria-expanded="true">
+          <span class="concept-num">2</span>
+          <span class="concept-title">What is a Spanning Tree?</span>
+          <svg class="concept-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="concept-content">
+          <p>A <strong>spanning tree</strong> is a subgraph that connects <strong>all vertices</strong> in a graph using the fewest possible edges, with <strong>no cycles</strong> (loops). For a graph with V vertices, a spanning tree always has exactly <strong>V − 1 edges</strong>.</p>
+          <div class="concept-graph-demo">
+            <span class="concept-grid-label">Our Example Graph — 6 Vertices, 10 Edges</span>
+            <svg class="concept-mini-graph" viewBox="0 0 500 460" width="400" height="368">
+              <!-- Edges -->
+              <line x1="150" y1="80" x2="350" y2="80" stroke="var(--color-text-faint)" stroke-width="2" opacity="0.5"/>
+              <line x1="150" y1="80" x2="150" y2="230" stroke="var(--color-text-faint)" stroke-width="2" opacity="0.5"/>
+              <line x1="350" y1="80" x2="150" y2="230" stroke="var(--color-text-faint)" stroke-width="2" opacity="0.5"/>
+              <line x1="350" y1="80" x2="350" y2="230" stroke="var(--color-text-faint)" stroke-width="2" opacity="0.5"/>
+              <line x1="350" y1="80" x2="150" y2="380" stroke="var(--color-text-faint)" stroke-width="2" opacity="0.5"/>
+              <line x1="150" y1="230" x2="350" y2="230" stroke="var(--color-text-faint)" stroke-width="2" opacity="0.5"/>
+              <line x1="150" y1="230" x2="150" y2="380" stroke="var(--color-text-faint)" stroke-width="2" opacity="0.5"/>
+              <line x1="350" y1="230" x2="150" y2="380" stroke="var(--color-text-faint)" stroke-width="2" opacity="0.5"/>
+              <line x1="350" y1="230" x2="350" y2="380" stroke="var(--color-text-faint)" stroke-width="2" opacity="0.5"/>
+              <line x1="150" y1="380" x2="350" y2="380" stroke="var(--color-text-faint)" stroke-width="2" opacity="0.5"/>
+              <!-- Edge weights -->
+              <text x="250" y="70" text-anchor="middle" font-size="14" font-weight="600" fill="var(--color-text-muted)" font-family="var(--font-mono)">4</text>
+              <text x="130" y="155" text-anchor="middle" font-size="14" font-weight="600" fill="var(--color-text-muted)" font-family="var(--font-mono)">4</text>
+              <text x="232" y="168" text-anchor="middle" font-size="14" font-weight="600" fill="var(--color-text-muted)" font-family="var(--font-mono)">2</text>
+              <text x="370" y="155" text-anchor="middle" font-size="14" font-weight="600" fill="var(--color-text-muted)" font-family="var(--font-mono)">3</text>
+              <text x="232" y="252" text-anchor="middle" font-size="14" font-weight="600" fill="var(--color-text-muted)" font-family="var(--font-mono)">1</text>
+              <text x="130" y="310" text-anchor="middle" font-size="14" font-weight="600" fill="var(--color-text-muted)" font-family="var(--font-mono)">6</text>
+              <text x="232" y="330" text-anchor="middle" font-size="14" font-weight="600" fill="var(--color-text-muted)" font-family="var(--font-mono)">7</text>
+              <text x="370" y="310" text-anchor="middle" font-size="14" font-weight="600" fill="var(--color-text-muted)" font-family="var(--font-mono)">8</text>
+              <text x="250" y="400" text-anchor="middle" font-size="14" font-weight="600" fill="var(--color-text-muted)" font-family="var(--font-mono)">9</text>
+              <text x="232" y="242" text-anchor="middle" font-size="14" font-weight="600" fill="var(--color-text-muted)" font-family="var(--font-mono)"></text>
+              <!-- B-E weight -->
+              <text x="234" y="218" text-anchor="middle" font-size="14" font-weight="600" fill="var(--color-text-muted)" font-family="var(--font-mono)">5</text>
+              <!-- Nodes -->
+              <circle cx="150" cy="80" r="22" fill="var(--color-primary)" stroke="var(--color-primary)" stroke-width="2"/>
+              <text x="150" y="86" text-anchor="middle" font-size="16" font-weight="700" fill="#fff" font-family="var(--font-mono)">A</text>
+              <circle cx="350" cy="80" r="22" fill="var(--color-primary)" stroke="var(--color-primary)" stroke-width="2"/>
+              <text x="350" y="86" text-anchor="middle" font-size="16" font-weight="700" fill="#fff" font-family="var(--font-mono)">B</text>
+              <circle cx="150" cy="230" r="22" fill="var(--color-primary)" stroke="var(--color-primary)" stroke-width="2"/>
+              <text x="150" y="236" text-anchor="middle" font-size="16" font-weight="700" fill="#fff" font-family="var(--font-mono)">C</text>
+              <circle cx="350" cy="230" r="22" fill="var(--color-primary)" stroke="var(--color-primary)" stroke-width="2"/>
+              <text x="350" y="236" text-anchor="middle" font-size="16" font-weight="700" fill="#fff" font-family="var(--font-mono)">D</text>
+              <circle cx="150" cy="380" r="22" fill="var(--color-primary)" stroke="var(--color-primary)" stroke-width="2"/>
+              <text x="150" y="386" text-anchor="middle" font-size="16" font-weight="700" fill="#fff" font-family="var(--font-mono)">E</text>
+              <circle cx="350" cy="380" r="22" fill="var(--color-primary)" stroke="var(--color-primary)" stroke-width="2"/>
+              <text x="350" y="386" text-anchor="middle" font-size="16" font-weight="700" fill="#fff" font-family="var(--font-mono)">F</text>
+            </svg>
+          </div>
+          <div class="concept-analogy">
+            <span class="analogy-label">Everyday Analogy</span>
+            <p>Imagine <strong>6 villages</strong> (A–F) connected by roads. A spanning tree is a set of roads that lets you travel from <strong>any village to any other</strong> — but with <strong>no unnecessary loops</strong>. With 6 villages, you need exactly <strong>5 roads</strong>.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 3: What is MST? -->
+      <div class="concept-card" data-card="3">
+        <button class="concept-header" aria-expanded="true">
+          <span class="concept-num">3</span>
+          <span class="concept-title">What is a Minimum Spanning Tree (MST)?</span>
+          <svg class="concept-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="concept-content">
+          <p>A <strong>Minimum Spanning Tree</strong> is the spanning tree with the <strong>smallest possible total edge weight</strong>. There may be many spanning trees for a graph, but the MST has the lowest total cost.</p>
+          <div class="concept-analogy">
+            <span class="analogy-label">Everyday Analogy</span>
+            <p>You want to connect those <strong>6 villages with roads</strong>, but roads cost money (the edge weights). The MST is the set of 5 roads that connects <strong>all 6 villages at the cheapest total cost</strong>.</p>
+          </div>
+          <p class="concept-callout"><strong>Our goal:</strong> Find the MST of the given graph starting from vertex A. The optimal MST has a total weight of <span class="highlight-accent">20</span>.</p>
+        </div>
+      </div>
+
+      <!-- Card 4: Prim's Algorithm Steps -->
+      <div class="concept-card" data-card="4">
+        <button class="concept-header" aria-expanded="true">
+          <span class="concept-num">4</span>
+          <span class="concept-title">Prim's Algorithm Steps</span>
+          <svg class="concept-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="concept-content">
+          <p>Prim's algorithm builds the MST one edge at a time, always choosing the <strong>cheapest edge</strong> that connects the growing tree to a new vertex.</p>
+          <ol class="astar-steps">
+            <li><strong>Start:</strong> Pick any vertex (we pick A). Add it to the MST set.</li>
+            <li><strong>Find candidates:</strong> Look at all edges connecting MST vertices to non-MST vertices.</li>
+            <li><strong>Pick cheapest:</strong> Select the candidate edge with the smallest weight.</li>
+            <li><strong>Add:</strong> Add that edge and its new vertex to the MST.</li>
+            <li><strong>Repeat:</strong> Go back to step 2 until all vertices are in the MST.</li>
+          </ol>
+          <p class="concept-callout">For a graph with <strong>V vertices</strong>, we repeat this V − 1 times, adding one edge each time. Our graph has 6 vertices, so the MST will have <strong>5 edges</strong>.</p>
+        </div>
+      </div>
+
+      <!-- Card 5: Key Terms -->
+      <div class="concept-card" data-card="5">
+        <button class="concept-header" aria-expanded="true">
+          <span class="concept-num">5</span>
+          <span class="concept-title">Key Terms: MST Set vs. Candidate Edges</span>
+          <svg class="concept-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="concept-content">
+          <div class="lists-comparison">
+            <div class="list-explain closed-explain">
+              <span class="list-badge closed-badge">MST SET</span>
+              <strong>"Villages Already Connected"</strong>
+              <p>Vertices already included in our growing tree. Like a CLOSED list — once a village is connected, we don't need to reconnect it.</p>
+            </div>
+            <div class="list-explain open-explain">
+              <span class="list-badge open-badge">CANDIDATES</span>
+              <strong>"Roads We Can Build Next"</strong>
+              <p>Edges from MST vertices to non-MST vertices. Like an OPEN list — these are our options. We always pick the cheapest one.</p>
+            </div>
+          </div>
+          <div class="concept-analogy">
+            <span class="analogy-label">Everyday Analogy</span>
+            <p>Think of it as expanding a <strong>road network</strong>. The MST Set is the villages already connected. Candidate edges are the roads available to build next — and you always build the <strong>cheapest road</strong> that reaches a new village.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 6: Why is Prim's Greedy? -->
+      <div class="concept-card" data-card="6">
+        <button class="concept-header" aria-expanded="true">
+          <span class="concept-num">6</span>
+          <span class="concept-title">Why is Prim's Greedy?</span>
+          <svg class="concept-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="concept-content">
+          <p>At each step, Prim's algorithm picks the <strong>locally cheapest edge</strong> — the one with the smallest weight among all candidates. It doesn't look ahead or reconsider past choices.</p>
+          <div class="concept-example">
+            <span class="example-label">Why it works</span>
+            <p>This greedy strategy is <strong>provably optimal</strong> for MST. By always adding the cheapest safe edge, we're guaranteed to find the minimum spanning tree. No backtracking is ever needed — the greedy choice at each step leads to the <strong>globally optimal solution</strong>.</p>
+          </div>
+          <p class="concept-callout"><strong>Prim's = Greedy + Optimal:</strong> Unlike many greedy algorithms that only give approximate solutions, Prim's greedy approach gives the <em>exact</em> optimal MST every time.</p>
+        </div>
+      </div>
+
+      <!-- Start Simulation Button -->
+      <div class="concepts-cta">
+        <button class="btn btn-start-sim" id="btnStartSim">
+          Start Simulation
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          <kbd>S</kbd>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <main class="main" id="simulationSection">
+    <!-- Left Column: Graph Visualization -->
+    <section class="puzzle-section">
+      <div class="graph-container">
+        <h2 class="grid-label">Interactive Graph Visualization</h2>
+        <div class="svg-wrapper">
+          <svg id="graphSvg" viewBox="0 0 500 460" width="500" height="460"></svg>
+        </div>
+        <div class="cost-display" id="mstWeightDisplay">MST Weight: <span class="cost-accent">0</span></div>
+      </div>
+
+      <!-- Controls -->
+      <div class="controls">
+        <button class="btn btn-primary" id="btnNextStep">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          Next Step
+          <kbd>→</kbd>
+        </button>
+        <button class="btn btn-accent" id="btnSolve">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5,3 19,12 5,21"/></svg>
+          Solve Completely
+          <kbd>Enter</kbd>
+        </button>
+        <button class="btn btn-secondary" id="btnReset">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1,4 1,10 7,10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+          Reset
+          <kbd>R</kbd>
+        </button>
+      </div>
+
+      <!-- Step Counter -->
+      <div class="step-counter" id="stepCounter">
+        Step <span id="stepNum">0</span> of <span id="totalSteps">5</span>
+        <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+      </div>
+
+      <!-- Explanation Panel -->
+      <div class="explanation-panel" id="explanationPanel">
+        <div class="explanation-header">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+          <span>What's happening?</span>
+        </div>
+        <div class="explanation-text" id="explanationText">
+          Press <strong>Next Step (→)</strong> to begin Prim's algorithm, or <strong>Solve Completely (Enter)</strong> to see the full solution animated.
+        </div>
+      </div>
+    </section>
+
+    <!-- Right Column: Algorithm State -->
+    <aside class="state-panel">
+      <!-- Formula Card -->
+      <div class="info-card formula-card">
+        <h3>Prim's Algorithm Rule</h3>
+        <div class="formula">Pick min-weight edge<br>MST → non-MST</div>
+        <div class="formula-legend">
+          <div><span class="legend-dot mst-dot"></span> <strong>MST vertices</strong> = already in the tree (green)</div>
+          <div><span class="legend-dot candidate-dot"></span> <strong>Candidate edges</strong> = options to pick from (orange)</div>
+          <div><span class="legend-dot selected-dot"></span> <strong>Selected edge</strong> = cheapest candidate (blue glow)</div>
+        </div>
+      </div>
+
+      <!-- MST Set Card -->
+      <div class="info-card">
+        <h3>
+          <span class="list-badge closed-badge">MST SET</span> Vertices
+          <span class="list-count" id="mstCount">0</span>
+        </h3>
+        <p class="list-desc">Vertices already included in the minimum spanning tree.</p>
+        <div class="list-content" id="mstSetList">
+          <div class="list-empty">Will be populated when algorithm starts</div>
+        </div>
+      </div>
+
+      <!-- Candidate Edges Card -->
+      <div class="info-card">
+        <h3>
+          <span class="list-badge open-badge">CANDIDATES</span> Edges
+          <span class="list-count" id="candidateCount">0</span>
+        </h3>
+        <p class="list-desc">Edges connecting MST vertices to non-MST vertices, sorted by weight.</p>
+        <div class="list-content" id="candidateList">
+          <div class="list-empty">Will be populated when algorithm starts</div>
+        </div>
+      </div>
+
+      <!-- Solution Path Card -->
+      <div class="info-card">
+        <h3>Solution Path</h3>
+        <div class="move-history" id="solutionPath">
+          <div class="list-empty">Selected MST edges will appear here</div>
+        </div>
+      </div>
+    </aside>
+  </main>
+
+  <footer class="footer">
+    <p>SPPU — Third Year — Semester VI — Subject Code: 310253 — Artificial Intelligence</p>
+    <a href="https://www.perplexity.ai/computer" target="_blank" rel="noopener noreferrer">Created with Perplexity Computer</a>
+  </footer>
+
+  <script src="./app.js"></script>
+<script data-pplx-inline-edit>
+(function(){
+  if(window===window.top)return;
+  function inlineAll(orig,clone){
+    if(orig.nodeType!==1)return;
+    try{
+      var cs=getComputedStyle(orig);
+      var t='';
+      for(var i=0;i<cs.length;i++){t+=cs[i]+':'+cs.getPropertyValue(cs[i])+';';}
+      clone.style.cssText=t;
+    }catch(e){}
+    var oc=orig.children,cc=clone.children;
+    for(var j=0;j<oc.length&&j<cc.length;j++){inlineAll(oc[j],cc[j]);}
+  }
+  function stripExternal(clone){
+    var imgs=clone.querySelectorAll('img');
+    for(var i=0;i<imgs.length;i++){
+      var s=imgs[i].getAttribute('src');
+      if(s&&!s.startsWith('data:'))imgs[i].removeAttribute('src');
+    }
+    var all=clone.querySelectorAll('*');
+    for(var i=0;i<all.length;i++){
+      var st=all[i].style.cssText;
+      if(st&&st.indexOf('url(')>=0){
+        all[i].style.cssText=st.replace(/url\(["']?(?!data:)[^)"']*["']?\)/gi,'none');
+      }
+    }
+  }
+  window.addEventListener('message',function(e){
+    if(!e.data||e.data.type!=='INLINE_EDIT_CAPTURE_REQUEST')return;
+    var scrollX=window.scrollX||window.pageXOffset||0;
+    var scrollY=window.scrollY||window.pageYOffset||0;
+    var w=window.innerWidth,h=window.innerHeight;
+    try{
+      var clone=document.documentElement.cloneNode(true);
+      var rm=clone.querySelectorAll('script,link[rel="stylesheet"],style');
+      for(var i=0;i<rm.length;i++){rm[i].remove();}
+      inlineAll(document.documentElement,clone);
+      stripExternal(clone);
+      var html=new XMLSerializer().serializeToString(clone);
+      var svg='<svg xmlns="http://www.w3.org/2000/svg" width="'+w+'" height="'+h+'">'
+        +'<foreignObject width="100%" height="100%">'
+        +'<div xmlns="http://www.w3.org/1999/xhtml" style="width:'+w+'px;height:'+h+'px;overflow:hidden">'
+        +'<div style="transform:translate(-'+scrollX+'px,-'+scrollY+'px);transform-origin:top left">'
+        +html+'</div></div></foreignObject></svg>';
+      var svgUrl='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg);
+      var img=new Image();
+      img.onload=function(){
+        var c=document.createElement('canvas');c.width=w;c.height=h;
+        c.getContext('2d').drawImage(img,0,0);
+        window.parent.postMessage({type:'INLINE_EDIT_SCREENSHOT_RESULT',dataUrl:c.toDataURL('image/png'),scrollX:scrollX,scrollY:scrollY},'*');
+      };
+      img.onerror=function(){
+        window.parent.postMessage({type:'INLINE_EDIT_SCREENSHOT_RESULT',dataUrl:null,scrollX:scrollX,scrollY:scrollY},'*');
+      };
+      img.src=svgUrl;
+    }catch(err){
+      window.parent.postMessage({type:'INLINE_EDIT_SCREENSHOT_RESULT',dataUrl:null,scrollX:scrollX,scrollY:scrollY},'*');
+    }
+  });
+})();
+</script></body>
+</html>
